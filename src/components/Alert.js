@@ -5,8 +5,10 @@ const firstUpperChar = word => {
 }
 export default function Alert(props) {
     return (
-        props.alert && <div className={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
-            <strong>{firstUpperChar(props.alert.type)} !</strong> {props.alert.message}
+        <div className="alterClass" style={{ height: "50px" }}>
+            {props.alert && <div className={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
+                <strong>{firstUpperChar(props.alert.type)} !</strong> {props.alert.message}
+            </div>}
         </div>
     )
 }

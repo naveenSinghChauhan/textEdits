@@ -20,6 +20,7 @@ export default function FormText(props) {
         let textContainer = document.querySelector('#textId');
         textContainer.select();
         navigator.clipboard.writeText(textContainer.value);
+        document.getSelection().removeAllRanges();
         props.showAlert("Clickboard copy", 'success');
     }
     const handleExtraSpace = () => {
@@ -32,29 +33,29 @@ export default function FormText(props) {
     const [text, setText] = useState('');
     return (
         <>
-            <div className="container" demo={props.mode} style={{ backgroundColor: props.mode === 'light' ? 'white' : 'grey', color: props.mode === 'light' ? 'black' : 'white' }}>
+            <div className="container" demo={props.mode} style={{ backgroundColor: props.mode === 'light' ? 'white' : '#2e1d43', color: props.mode === 'light' ? 'black' : 'white' }}>
 
                 <h1>{props.headingText}</h1>
                 <div className="mb-3">
-                    <textarea className="form-control" style={{ backgroundColor: props.mode === 'light' ? 'white' : 'grey', color: props.mode === 'light' ? 'black' : 'white' }} value={text} placeholder="Leave a comment here" id="textId" onChange={handleOnChange} rows="8" ></textarea>
+                    <textarea className="form-control" style={{ backgroundColor: props.mode === 'light' ? 'white' : '#13466e', color: props.mode === 'light' ? 'black' : 'white' }} value={text} placeholder="Leave a comment here" id="textId" onChange={handleOnChange} rows="8" ></textarea>
                 </div>
-                <button className="btn btn-primary mx-2" onClick={handleUpClick}>
+                <button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" onClick={handleUpClick}>
                     Convert click to uppercase
                 </button>
-                <button className="btn btn-primary mx-2" onClick={handleUpClickLower}>
+                <button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" onClick={handleUpClickLower}>
                     Convert click to lowercase
                 </button>
-                <button className="btn btn-primary mx-2" onClick={handleCopy}>
+                <button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" onClick={handleCopy}>
                     Copy text
                 </button>
-                <button className="btn btn-primary mx-2" onClick={handleExtraSpace}>
+                <button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" onClick={handleExtraSpace}>
                     Remove extra spaces
                 </button>
-            </div>
-            <div className="container" style={{ backgroundColor: props.mode === 'light' ? 'white' : 'grey', color: props.mode === 'light' ? 'black' : 'white' }}>
+            </div >
+            <div className="container" style={{ backgroundColor: props.mode === 'light' ? 'white' : '#2e1d43', color: props.mode === 'light' ? 'black' : 'white' }}>
                 <h2>Your text summary</h2>
-                <p>{text.split(" ").length} words and {text.length} characters</p>
-                <p>{0.008 * text.split(" ").length} minutes read</p>
+                <p>{text.split(/\s+/).filter(element => { return element.length !== 0 }).length} words and {text.length} characters</p>
+                <p>{0.008 * text.split(" ").filter(element => { return element.length !== 0 }).length} minutes read</p>
                 <h2>Preview</h2>
                 <p>{(text.length > 0) ? text : "Your text previous here"}</p>
             </div>
